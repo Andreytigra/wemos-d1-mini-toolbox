@@ -5,6 +5,7 @@
 #include "web_page.h"
 #include "ir.h"
 #include "radio.h"
+#include "files.h"
 
 const char *ssid = APSSID;
 const char *password = APPSK;
@@ -63,6 +64,12 @@ void handleSendRadio() {
   sendRadio(nPulseLength, decimalCode, bitLength, protocol);
 }
 
+void getControllers() {
+  String controllers = listContorollers();
+  Serial.println(controllers);
+  server.send(200, "application/json", controllers);
+}
+
 void wifiSetup() {
   WiFi.softAP(ssid, password);
 
@@ -78,6 +85,7 @@ void wifiSetup() {
   server.on("/sendIRRaw", HTTP_POST, handleSendIRRaw);
   server.on("/sendRadio", HTTP_POST, handleSendRadio);
   server.on("/log", handleLog);
+  //server.on("/getControllers", getControllers);
 
   server.begin();
   Serial.println("HTTP server started");

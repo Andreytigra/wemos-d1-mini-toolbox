@@ -1,4 +1,5 @@
 #include <Arduino.h>
+//#include <LittleFS.h>
 #include "radio.h"
 #include "ir.h"
 #include "web.h"
@@ -6,8 +7,9 @@
 
 void setup() {
   Serial.begin(115200);
+  //LittleFS.begin();
   wifiSetup();
-  delay(10000);
+  delay(2000);
   setupRadio();
   setupIR();
   Serial.printf("Free heap after all: %u bytes\n", ESP.getFreeHeap());
